@@ -50,6 +50,12 @@ void AWSLogSystem::LogMessage(Aws::Utils::Logging::LogLevel log_level,
                               const std::string& message) {
   if (message == "Initializing Curl library") return;
   switch (log_level) {
+    case Aws::Utils::Logging::LogLevel::Trace:
+      LOG(TRACE) << message;
+      break;
+    case Aws::Utils::Logging::LogLevel::Debug:
+      LOG(DEBUG) << message;
+      break;
     case Aws::Utils::Logging::LogLevel::Info:
       LOG(INFO) << message;
       break;
@@ -74,9 +80,19 @@ static const char* kAWSLoggingTag = "AWSLogging";
 Aws::Utils::Logging::LogLevel ParseLogLevelFromEnv() {
   Aws::Utils::Logging::LogLevel log_level = Aws::Utils::Logging::LogLevel::Info;
 
-  const int64_t level = tensorflow::internal::MinLogLevelFromEnv();
+  const int64_t level = 
+      getenv("AWS_LOG_LEVEL") ? tensorflow::internal::LogLevelStrToInt(getenv("AWS_LOG_LEVEL")) 
+                              : tensorflow::internal::MinLogLevelFromEnv();
+
+  LOG(INFO) << "Initializing AWS logger with log level " << level;                         
 
   switch (level) {
+    case TRACE:
+      log_level = Aws::Utils::Logging::LogLevel::Trace;
+      break;
+    case DEBUG:
+      log_level = Aws::Utils::Logging::LogLevel::Debug;
+      break;
     case INFO:
       log_level = Aws::Utils::Logging::LogLevel::Info;
       break;

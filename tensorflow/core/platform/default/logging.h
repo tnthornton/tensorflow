@@ -33,6 +33,8 @@ const int WARNING = 1;         // base_logging::WARNING;
 const int ERROR = 2;           // base_logging::ERROR;
 const int FATAL = 3;           // base_logging::FATAL;
 const int NUM_SEVERITIES = 4;  // base_logging::NUM_SEVERITIES;
+const int DEBUG = 5;           // base_logging::DEBUG;
+const int TRACE = 6;           // base_logging::TRACE;
 
 namespace internal {
 
@@ -89,6 +91,10 @@ class LogMessageFatal : public LogMessage {
   ::tensorflow::internal::LogMessage(__FILE__, __LINE__, ::tensorflow::ERROR)
 #define _TF_LOG_FATAL \
   ::tensorflow::internal::LogMessageFatal(__FILE__, __LINE__)
+#define _TF_LOG_DEBUG \
+  ::tensorflow::internal::LogMessage(__FILE__, __LINE__, ::tensorflow::DEBUG)
+#define _TF_LOG_TRACE \
+  ::tensorflow::internal::LogMessage(__FILE__, __LINE__, ::tensorflow::TRACE)
 
 #define _TF_LOG_QFATAL _TF_LOG_FATAL
 
