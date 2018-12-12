@@ -10,6 +10,6 @@ def repo():
             "https://github.com/tnthornton/aws-sdk-cpp/archive/1.5.7-modified1.tar.gz",
         ],
         sha256 = "840d963d0e82fd78a91d6400b9e9caf703692c96a42b9bcb8408945138bb3568",
-        strip_prefix = "aws-sdk-cpp-1.5.7-modified",
+        strip_prefix = "aws-sdk-cpp-1.5.7-modified1",
         build_file = "//third_party/aws:BUILD.bazel",
     )
