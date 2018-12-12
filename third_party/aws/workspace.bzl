@@ -6,7 +6,7 @@ def repo():
     third_party_http_archive(
         name = "aws",
         urls = [
-            "https://mirror.bazel.build/github.com/aws/aws-sdk-cpp/archive/1.5.7-modified.tar.gz",
+            # "https://mirror.bazel.build/github.com/aws/aws-sdk-cpp/archive/1.5.7-modified.tar.gz",
             "https://github.com/aws/aws-sdk-cpp/archive/1.5.7-modified.tar.gz",
         ],
         sha256 = "2497caa825a53a40960bc36ff77b8fb85cae8dbae7109c1af3400df136b8eba6",
