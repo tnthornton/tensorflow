@@ -106,6 +106,8 @@ http_archive(
     ],
 )
 
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "new_git_repository")
+
 new_git_repository(
     name = "awslabs",
     remote = "https://github.com/awslabs/aws-c-event-stream.git",
