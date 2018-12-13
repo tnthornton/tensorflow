@@ -12,6 +12,14 @@ http_archive(
     ],
 )
 
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "new_git_repository")
+
+new_git_repository(
+    name = "awslabs",
+    remote = "https://github.com/awslabs/aws-c-event-stream.git",
+    commit = "cf63290d99e61f5ebad0ea5661e6445d1e23d316",
+)
+
 load("@io_bazel_rules_closure//closure:defs.bzl", "closure_repositories")
 
 closure_repositories()
@@ -104,13 +112,5 @@ http_archive(
         "http://storage.googleapis.com/download.tensorflow.org/models/speech_commands_v0.01.zip",
         "http://download.tensorflow.org/models/speech_commands_v0.01.zip",
     ],
-)
-
-load("@bazel_tools//tools/build_defs/repo:git.bzl", "new_git_repository")
-
-new_git_repository(
-    name = "awslabs",
-    remote = "https://github.com/awslabs/aws-c-event-stream.git",
-    commit = "cf63290d99e61f5ebad0ea5661e6445d1e23d316",
 )
 
