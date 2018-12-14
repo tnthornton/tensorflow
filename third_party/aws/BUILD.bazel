@@ -90,9 +90,9 @@ genrule(
     cmd = """
     _cfg_path=external/aws/aws-cpp-sdk-core/include/aws/core/VersionConfig.h;
 
-    cat $$cfg_path;
+    cat $$_cfg_path;
 
-    AWS_SDK_VERSION_STRING=`cat $$cfg_path | grep "AWS_SDK_VERSION_STRING" | awk '{print $$3}' | cut -d"\"" -f2`;
+    AWS_SDK_VERSION_STRING=`cat $$_cfg_path | grep "AWS_SDK_VERSION_STRING" | awk '{print $$3}' | cut -d"\"" -f2`;
     
     AWS_SDK_VERSION_MAJOR=`echo $$AWS_SDK_VERSION_STRING | cut -d"." -f1`;
     AWS_SDK_VERSION_MINOR=`echo $$AWS_SDK_VERSION_STRING | cut -d"." -f2`;
