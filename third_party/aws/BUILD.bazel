@@ -88,8 +88,8 @@ genrule(
     srcs = ["aws-cpp-sdk-core/include/aws/core/VersionConfig.h.in"],
     outs = ["aws-cpp-sdk-core/include/aws/core/VersionConfig.h"],
     cmd = """
-    cat aws-cpp-sdk-core/include/aws/core/VersionConfig.h;
-    cat external/aws-cpp-sdk-core/include/aws/core/VersionConfig.h;
+    ls -lh;
+    cat external/aws/aws-cpp-sdk-core/include/aws/core/VersionConfig.h;
     """,
 )
 
