@@ -87,7 +87,7 @@ genrule(
     name = "VersionConfig_h",
     srcs = ["aws-cpp-sdk-core/include/aws/core/VersionConfig.h.in"],
     outs = ["aws-cpp-sdk-core/include/aws/core/VersionConfig.h"],
-    cmd = "tree",
+    cmd = "ls -lh",
 )
 
 template_rule(
