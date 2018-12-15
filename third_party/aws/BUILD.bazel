@@ -104,8 +104,6 @@ genrule(
     echo "#define AWS_SDK_VERSION_MINOR $${_aws_sdk_version_minor}\n" >> $$_cfg_path;
     echo "#define AWS_SDK_VERSION_PATCH $${_aws_sdk_version_patch}" >> $$_cfg_path;
 
-    cat $$_cfg_path;
-
     cp $$_cfg_path $@
     """,
 )
