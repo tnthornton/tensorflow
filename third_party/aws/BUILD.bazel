@@ -108,7 +108,7 @@ genrule(
 
     cat $$_cfg_path;
 
-    $$_cfg_path > $@
+    cp $$_cfg_path $@
 
     cat external/aws/aws-cpp-sdk-core/include/aws/core/VersionConfig.h
     """,
