@@ -90,27 +90,23 @@ genrule(
     cmd = """
     _cfg_path=external/aws/aws-cpp-sdk-core/include/aws/core/VersionConfig.h;
 
-    cat $$_cfg_path;
-
-    AWS_SDK_VERSION_STRING=`cat $$_cfg_path | grep "AWS_SDK_VERSION_STRING" | awk '{print $$3}'`;
-    _sdk_version_no_quotes=`echo $$AWS_SDK_VERSION_STRING | cut -d"\\"" -f2`
+    _aws_sdk_version_string=`cat $$_cfg_path | grep "AWS_SDK_VERSION_STRING" | awk '{print $$3}'`;
+    _sdk_version_no_quotes=`echo $$_aws_sdk_version_string | cut -d"\\"" -f2`
     
-    AWS_SDK_VERSION_MAJOR=`echo $$_sdk_version_no_quotes | cut -d"." -f1`;
-    AWS_SDK_VERSION_MINOR=`echo $$_sdk_version_no_quotes | cut -d"." -f2`;
-    AWS_SDK_VERSION_PATCH=`echo $$_sdk_version_no_quotes | cut -d"." -f3`;
+    _aws_sdk_version_major=`echo $$_sdk_version_no_quotes | cut -d"." -f1`;
+    _aws_sdk_version_minor=`echo $$_sdk_version_no_quotes | cut -d"." -f2`;
+    _aws_sdk_version_patch=`echo $$_sdk_version_no_quotes | cut -d"." -f3`;
 
     sed -i '/AWS_SDK_VERSION_STRING/d' $$_cfg_path;
 
-    echo "#define AWS_SDK_VERSION_STRING $${AWS_SDK_VERSION_STRING}\n" >> $$_cfg_path;
-    echo "#define AWS_SDK_VERSION_MAJOR $${AWS_SDK_VERSION_MAJOR}\n" >> $$_cfg_path;
-    echo "#define AWS_SDK_VERSION_MINOR $${AWS_SDK_VERSION_MINOR}\n" >> $$_cfg_path;
-    echo "#define AWS_SDK_VERSION_PATCH $${AWS_SDK_VERSION_PATCH}" >> $$_cfg_path;
+    echo "#define AWS_SDK_VERSION_STRING $${_aws_sdk_version_string}\n" >> $$_cfg_path;
+    echo "#define AWS_SDK_VERSION_MAJOR $${_aws_sdk_version_major}\n" >> $$_cfg_path;
+    echo "#define AWS_SDK_VERSION_MINOR $${_aws_sdk_version_minor}\n" >> $$_cfg_path;
+    echo "#define AWS_SDK_VERSION_PATCH $${_aws_sdk_version_patch}" >> $$_cfg_path;
 
     cat $$_cfg_path;
 
     cp $$_cfg_path $@
-
-    cat external/aws/aws-cpp-sdk-core/include/aws/core/VersionConfig.h
     """,
 )
 
