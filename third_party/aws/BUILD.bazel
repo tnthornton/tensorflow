@@ -85,7 +85,7 @@ cc_library(
 
 genrule(
     name = "VersionConfig_h",
-    srcs = ["aws-cpp-sdk-core/include/aws/core/VersionConfig.h.in"],
+    srcs = [],
     outs = ["aws-cpp-sdk-core/include/aws/core/VersionConfig.h"],
     cmd = """
     _cfg_path=external/aws/aws-cpp-sdk-core/include/aws/core/VersionConfig.h;
