@@ -89,7 +89,7 @@ genrule(
     outs = ["aws-cpp-sdk-core/include/aws/core/VersionConfig.h_gen"],
     cmd = """
     _cfg_path=external/aws/aws-cpp-sdk-core/include/aws/core/VersionConfig.h;
-    _out_path="$${cfg_path}_gen"
+    _out_path="$${_cfg_path}_gen"
 
     _aws_sdk_version_string=`cat $$_cfg_path | grep "AWS_SDK_VERSION_STRING" | awk '{print $$3}'`;
     _sdk_version_no_quotes=`echo $$_aws_sdk_version_string | cut -d"\\"" -f2`
