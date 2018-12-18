@@ -53,7 +53,6 @@ cc_library(
     ]),
     hdrs = [
         "aws-cpp-sdk-core/include/aws/core/SDKConfig.h",
-        "aws-cpp-sdk-core/include/aws/core/VersionConfig.h",
         ":VersionConfig_h",
     ],
     defines = select({
@@ -86,10 +85,9 @@ cc_library(
 
 genrule(
     name = "version_string",
-    srcs = ["aws-cpp-sdk-core/include/aws/core/VersionConfig.h"],
+    srcs = [],
     outs = ["aws-cpp-sdk-core/include/aws/core/version_string"],
     cmd = """
-    cat $(location VersionConfig.h)
     _ver_path=external/aws/aws-cpp-sdk-core/include/aws/core/VersionConfig.h;
 
     _aws_sdk_version_string=`cat $$_ver_path | grep "AWS_SDK_VERSION_STRING" | awk '{print $$3}'`;
