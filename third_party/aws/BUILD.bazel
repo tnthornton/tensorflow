@@ -85,7 +85,7 @@ cc_library(
 )
 
 genrule(
-    name = "VersionConfig_h",
+    name = "VersionConfig_h_gen",
     srcs = [],
     outs = ["aws-cpp-sdk-core/include/aws/core/VersionConfig.h_gen"],
     cmd = """
@@ -110,6 +110,15 @@ genrule(
 
     cp $$_out_path $@
     """,
+)
+
+template_rule(
+    name = "VersionConfig_h",
+    src = ":VersionConfig_h_gen",
+    out = "aws-cpp-sdk-core/include/aws/core/VersionConfig.h",
+    substitutions = {
+        "define": "include",
+    }
 )
 
 template_rule(
