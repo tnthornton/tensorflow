@@ -85,15 +85,31 @@ cc_library(
 )
 
 genrule(
-    name = "VersionConfig_h_gen",
+    name = "version_string",
     srcs = [],
-    outs = ["aws-cpp-sdk-core/include/aws/core/VersionConfig.h_gen"],
+    outs = ["aws-cpp-sdk-core/include/aws/core/version_string"],
     cmd = """
-    _cfg_path=external/aws/aws-cpp-sdk-core/include/aws/core/VersionConfig.h;
-    _out_path="$${_cfg_path}_gen"
+    cat $(location VersionConfig.h)
+    _ver_path=external/aws/aws-cpp-sdk-core/include/aws/core/VersionConfig.h;
 
-    _aws_sdk_version_string=`cat $$_cfg_path | grep "AWS_SDK_VERSION_STRING" | awk '{print $$3}'`;
+    _aws_sdk_version_string=`cat $$_ver_path | grep "AWS_SDK_VERSION_STRING" | awk '{print $$3}'`;
+    echo "$${_aws_sdk_version_string}" > $@
+    """,
+)
+
+genrule(
+    name = "VersionConfig_h",
+    srcs = [":version_string"],
+    outs = ["aws-cpp-sdk-core/include/aws/core/VersionConfig.h"],
+    cmd = """
+    cat $(location :version_string);
+    echo $(location VersionConfig.h);
+    _cfg_path=$(location VersionConfig.h);
+
+    _aws_sdk_version_string=`cat $(location :version_string) | grep "AWS_SDK_VERSION_STRING" | awk '{print $$3}'`;
     _sdk_version_no_quotes=`echo $$_aws_sdk_version_string | cut -d"\\"" -f2`
+
+    rm $(location :version_string); # remove temp file that forces re-processing of VersionConfig.h
     
     _aws_sdk_version_major=`echo $$_sdk_version_no_quotes | cut -d"." -f1`;
     _aws_sdk_version_minor=`echo $$_sdk_version_no_quotes | cut -d"." -f2`;
@@ -106,19 +122,8 @@ genrule(
     echo "#define AWS_SDK_VERSION_MINOR $${_aws_sdk_version_minor}\n" >> $$_cfg_path;
     echo "#define AWS_SDK_VERSION_PATCH $${_aws_sdk_version_patch}" >> $$_cfg_path;
 
-    echo "$${_aws_sdk_version_string}" > $$_out_path
-
-    cp $$_out_path $@
+    cp $$_cfg_path $@
     """,
-)
-
-template_rule(
-    name = "VersionConfig_h",
-    src = ":VersionConfig_h_gen",
-    out = "aws-cpp-sdk-core/include/aws/core/VersionConfig.h",
-    substitutions = {
-        "define": "include",
-    }
 )
 
 template_rule(
