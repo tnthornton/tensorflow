@@ -100,10 +100,9 @@ genrule(
     srcs = [":version_string"],
     outs = ["aws-cpp-sdk-core/include/aws/core/VersionConfig.h"],
     cmd = """
-    cat $(location :version_string);
     _cfg_path=external/aws/aws-cpp-sdk-core/include/aws/core/VersionConfig.h;
 
-    _aws_sdk_version_string=`cat $(location :version_string) | grep "AWS_SDK_VERSION_STRING" | awk '{print $$3}'`;
+    _aws_sdk_version_string=`cat $(location :version_string)`;
     _sdk_version_no_quotes=`echo $$_aws_sdk_version_string | cut -d"\\"" -f2`
 
     rm $(location :version_string); # remove temp file that forces re-processing of VersionConfig.h
