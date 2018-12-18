@@ -83,6 +83,15 @@ cc_library(
     ],
 )
 
+template_rule(
+    name = "SDKConfig_h",
+    src = "aws-cpp-sdk-core/include/aws/core/SDKConfig.h.in",
+    out = "aws-cpp-sdk-core/include/aws/core/SDKConfig.h",
+    substitutions = {
+        "cmakedefine": "define",
+    },
+)
+
 genrule(
     name = "version_string",
     srcs = [],
@@ -120,13 +129,4 @@ genrule(
 
     cp $$_cfg_path $@
     """,
-)
-
-template_rule(
-    name = "SDKConfig_h",
-    src = "aws-cpp-sdk-core/include/aws/core/SDKConfig.h.in",
-    out = "aws-cpp-sdk-core/include/aws/core/SDKConfig.h",
-    substitutions = {
-        "cmakedefine": "define",
-    },
 )
