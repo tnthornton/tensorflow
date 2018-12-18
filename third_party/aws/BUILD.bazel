@@ -86,7 +86,7 @@ cc_library(
 
 genrule(
     name = "version_string",
-    srcs = [],
+    srcs = ["aws-cpp-sdk-core/include/aws/core/VersionConfig.h"],
     outs = ["aws-cpp-sdk-core/include/aws/core/version_string"],
     cmd = """
     cat $(location VersionConfig.h)
