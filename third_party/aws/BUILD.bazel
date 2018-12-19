@@ -9,6 +9,8 @@ exports_files(["LICENSE"])
 
 load("@org_tensorflow//third_party:common.bzl", "template_rule")
 
+COPTS = ["-DAWS_SDK_VERSION_MAJOR=1", "-DAWS_SDK_VERSION_MINOR=5", "-DAWS_SDK_VERSION_PATCH=8"]
+
 cc_library(
     name = "aws",
     srcs = select({
@@ -53,7 +55,6 @@ cc_library(
     ]),
     hdrs = [
         "aws-cpp-sdk-core/include/aws/core/SDKConfig.h",
-        "@org_tensorflow//third_party/aws/core:VersionConfig_h",
     ],
     defines = select({
         "@org_tensorflow//tensorflow:linux_x86_64": [
@@ -81,6 +82,7 @@ cc_library(
     deps = [
         "@curl",
     ],
+    copts = COPTS,
 )
 
 template_rule(
