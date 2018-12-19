@@ -1,0 +1,6 @@
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "VersionConfig_h",
+    srcs = ["VersionConfig.h"],
+)

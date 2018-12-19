@@ -53,7 +53,7 @@ cc_library(
     ]),
     hdrs = [
         "aws-cpp-sdk-core/include/aws/core/SDKConfig.h",
-        ":VersionConfig_h",
+        "//third_party/aws/core:VersionConfig_h",
     ],
     defines = select({
         "@org_tensorflow//tensorflow:linux_x86_64": [
@@ -92,41 +92,41 @@ template_rule(
     },
 )
 
-genrule(
-    name = "version_string",
-    srcs = [],
-    outs = ["aws-cpp-sdk-core/include/aws/core/version_string"],
-    cmd = """
-    _ver_path=external/aws/aws-cpp-sdk-core/include/aws/core/VersionConfig.h;
+# genrule(
+#     name = "version_string",
+#     srcs = [],
+#     outs = ["aws-cpp-sdk-core/include/aws/core/version_string"],
+#     cmd = """
+#     _ver_path=external/aws/aws-cpp-sdk-core/include/aws/core/VersionConfig.h;
 
-    _aws_sdk_version_string=`cat $$_ver_path | grep "AWS_SDK_VERSION_STRING" | awk '{print $$3}'`;
-    echo "$${_aws_sdk_version_string}" > $@
-    """,
-)
+#     _aws_sdk_version_string=`cat $$_ver_path | grep "AWS_SDK_VERSION_STRING" | awk '{print $$3}'`;
+#     echo "$${_aws_sdk_version_string}" > $@
+#     """,
+# )
 
-genrule(
-    name = "VersionConfig_h",
-    srcs = [":version_string"],
-    outs = ["aws-cpp-sdk-core/include/aws/core/VersionConfig.h"],
-    cmd = """
-    _cfg_path=external/aws/aws-cpp-sdk-core/include/aws/core/VersionConfig.h;
+# genrule(
+#     name = "VersionConfig_h",
+#     srcs = [":version_string"],
+#     outs = ["aws-cpp-sdk-core/include/aws/core/VersionConfig.h"],
+#     cmd = """
+#     _cfg_path=external/aws/aws-cpp-sdk-core/include/aws/core/VersionConfig.h;
 
-    _aws_sdk_version_string=`cat $(location :version_string)`;
-    _sdk_version_no_quotes=`echo $$_aws_sdk_version_string | cut -d"\\"" -f2`
+#     _aws_sdk_version_string=`cat $(location :version_string)`;
+#     _sdk_version_no_quotes=`echo $$_aws_sdk_version_string | cut -d"\\"" -f2`
 
-    rm $(location :version_string); # remove temp file that forces re-processing of VersionConfig.h
+#     rm $(location :version_string); # remove temp file that forces re-processing of VersionConfig.h
     
-    _aws_sdk_version_major=`echo $$_sdk_version_no_quotes | cut -d"." -f1`;
-    _aws_sdk_version_minor=`echo $$_sdk_version_no_quotes | cut -d"." -f2`;
-    _aws_sdk_version_patch=`echo $$_sdk_version_no_quotes | cut -d"." -f3`;
+#     _aws_sdk_version_major=`echo $$_sdk_version_no_quotes | cut -d"." -f1`;
+#     _aws_sdk_version_minor=`echo $$_sdk_version_no_quotes | cut -d"." -f2`;
+#     _aws_sdk_version_patch=`echo $$_sdk_version_no_quotes | cut -d"." -f3`;
 
-    sed -i '/AWS_SDK_VERSION_STRING/d' $$_cfg_path;
+#     sed -i '/AWS_SDK_VERSION_STRING/d' $$_cfg_path;
 
-    echo "#define AWS_SDK_VERSION_STRING $${_aws_sdk_version_string}\n" >> $$_cfg_path;
-    echo "#define AWS_SDK_VERSION_MAJOR $${_aws_sdk_version_major}\n" >> $$_cfg_path;
-    echo "#define AWS_SDK_VERSION_MINOR $${_aws_sdk_version_minor}\n" >> $$_cfg_path;
-    echo "#define AWS_SDK_VERSION_PATCH $${_aws_sdk_version_patch}" >> $$_cfg_path;
+#     echo "#define AWS_SDK_VERSION_STRING $${_aws_sdk_version_string}\n" >> $$_cfg_path;
+#     echo "#define AWS_SDK_VERSION_MAJOR $${_aws_sdk_version_major}\n" >> $$_cfg_path;
+#     echo "#define AWS_SDK_VERSION_MINOR $${_aws_sdk_version_minor}\n" >> $$_cfg_path;
+#     echo "#define AWS_SDK_VERSION_PATCH $${_aws_sdk_version_patch}" >> $$_cfg_path;
 
-    cp $$_cfg_path $@
-    """,
-)
+#     cp $$_cfg_path $@
+#     """,
+# )
