@@ -9,7 +9,7 @@ exports_files(["LICENSE"])
 
 load("@org_tensorflow//third_party:common.bzl", "template_rule")
 
-COPTS = ["-DAWS_SDK_VERSION_MAJOR=1", "-DAWS_SDK_VERSION_MINOR=5", "-DAWS_SDK_VERSION_PATCH=8"]
+# COPTS = []
 
 cc_library(
     name = "aws",
@@ -73,7 +73,11 @@ cc_library(
             "ENABLE_NO_ENCRYPTION",
         ],
         "//conditions:default": [],
-    }),
+    }) + glob([
+        "AWS_SDK_VERSION_MAJOR=1", 
+        "AWS_SDK_VERSION_MINOR=5",
+        "AWS_SDK_VERSION_PATCH=8",
+    ]),
     includes = [
         "aws-cpp-sdk-core/include/",
         "aws-cpp-sdk-kinesis/include/",
@@ -82,7 +86,7 @@ cc_library(
     deps = [
         "@curl",
     ],
-    copts = COPTS,
+    # copts = COPTS,
 )
 
 template_rule(
