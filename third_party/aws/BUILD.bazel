@@ -53,7 +53,7 @@ cc_library(
     ]),
     hdrs = [
         "aws-cpp-sdk-core/include/aws/core/SDKConfig.h",
-        "//third_party/aws/core:VersionConfig_h",
+        "aws/core:VersionConfig_h",
     ],
     defines = select({
         "@org_tensorflow//tensorflow:linux_x86_64": [
